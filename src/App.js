@@ -4,6 +4,7 @@ import Tasks from "./components/Tasks";
 import { useState } from "react";
 import AddTask from "./components/AddTask";
 function App() {
+  const[showAddTask,setShowAddTask]=useState(false)
   const[tasks,setTasks]=useState([
     {
         id:1,
@@ -32,6 +33,9 @@ const addTask=(task)=>{
   const newTask={id,...task}
   setTasks([...tasks,newTask])
 }
+const taskAdd=()=>{
+  setShowAddTask(!showAddTask)
+}
 // delete tasks
 const deleteTask=(id)=>{
   setTasks(tasks.filter((task)=>task.id!==id))
@@ -42,8 +46,8 @@ const toggleRemainder=(id)=>{
 
   return (
     <div className="container">
-      <Header title="Task Tracker" />
-      <AddTask onAdd={addTask} />
+      <Header  taskAdder={taskAdd}title="Task Tracker" />
+      {showAddTask &&<AddTask onAdd={addTask} />}
       {tasks.length>0?<Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleRemainder}/>:'No Tasks '}
       
     </div>
